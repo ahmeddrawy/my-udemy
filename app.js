@@ -18,10 +18,10 @@ app.post('/api/courses' , (req,res)=>{
         name : Joi.string().min(3).required()
     });
     
-    const {error, result} = schema.validate(req.body); ///return object has error and result
+    const {error, value} = validateCourse(req.body); ///return object has error and result
     ///if error is null then validated and will proceed
     if(!error){
-        console.log(result);
+        console.log(value);
         const course = {
             id: courses.length +1,
             name: req.body.name ,
@@ -52,6 +52,37 @@ app.get('/api/courses/:id',(req,res)=>{
     }
     // console.log(ret);
 });
+/// to update course
+app.put('/api/courses/:id',(req,res)=>{
+    // look up the course if not found return 404  not found
+    const id = req.params.id;
+    const course = courses.find((course)=> course.id == req.params.id);
+    if(!course){
+        res.status(404).send("not found");
+        return ;
+    }
+
+    //validate 
+    //if invalid return 400 - bad request
+    const {error, result} =validateCourse(req.body); ///return object has error and result
+
+    if(error){
+        const error_array = error.details.map((e)=>e.message)
+        console.log(error_array);
+        res.status(400).send(error_array);
+        return ;
+    }
+    // update and return the updated course
+    course.name = req.body.name;
+    res.send(course);
+    return ;
+});
+function validateCourse(course){
+    const schema = Joi.object({
+        name : Joi.string().min(3).required()
+    });
+    return schema.validate(course);
+}
 const port = process.env.PORT || 8080;
 app.listen(port,()=>{
     console.log(`listening to port ${port}`);
