@@ -10,14 +10,12 @@ let courses=[
 app.get('/',(req ,res)=>{
     res.send('hello world');
 });
+///get all courses
 app.get('/api/courses',(req , res)=>{
     res.send(courses);
 });
+///ad course to courses
 app.post('/api/courses' , (req,res)=>{
-    const schema = Joi.object({
-        name : Joi.string().min(3).required()
-    });
-    
     const {error, value} = validateCourse(req.body); ///return object has error and result
     ///if error is null then validated and will proceed
     if(!error){
@@ -40,6 +38,7 @@ app.post('/api/courses' , (req,res)=>{
     // console.log(result);
 });
 /// api/courses/1
+///ge course by id
 app.get('/api/courses/:id',(req,res)=>{
     console.log(req.params.id);
     const ret = courses.find((course)=> course.id == req.params.id);
@@ -64,7 +63,7 @@ app.put('/api/courses/:id',(req,res)=>{
 
     //validate 
     //if invalid return 400 - bad request
-    const {error, result} =validateCourse(req.body); ///return object has error and result
+    const {error, value} =validateCourse(req.body); ///return object has error and result
 
     if(error){
         const error_array = error.details.map((e)=>e.message)
