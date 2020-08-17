@@ -76,6 +76,20 @@ app.put('/api/courses/:id',(req,res)=>{
     res.send(course);
     return ;
 });
+/// to delete course by id
+app.delete('/api/courses/:id',(req , res)=>{
+    const course = courses.find((course)=> course.id == req.params.id);
+    if(!course){
+        res.status(404).send("not found");
+        return ;
+    }
+    const indx = courses.indexOf(course);
+    courses.splice(indx,1);
+    res.send(course);
+    return;
+
+});
+//utilites
 function validateCourse(course){
     const schema = Joi.object({
         name : Joi.string().min(3).required()
