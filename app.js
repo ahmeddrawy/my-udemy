@@ -96,6 +96,12 @@ function validateCourse(course){
     });
     return schema.validate(course);
 }
+///genres endpoints
+const genres2 = [{'id' : 1 , "name":"comedy","movies":20} ,{'id' : 2 , "name":"horror","movies":14} ];
+app.get('/api/genres',(req,res)=>{
+    res.send(genres2);
+});
+
 const port = process.env.PORT || 8080;
 app.listen(port,()=>{
     console.log(`listening to port ${port}`);
