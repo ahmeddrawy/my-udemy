@@ -101,6 +101,15 @@ const genres = [{'id' : 1 , "name":"comedy","movies":20} ,{'id' : 2 , "name":"ho
 app.get('/api/genres',(req,res)=>{
     res.send(genres);
 });
+app.get('/api/genres/:id',(req,res)=>{
+    const id = parseInt( req.params.id);
+    const genre = genres.find((element)=>element.id ===id);
+    if(!genre){
+        res.status(404).send('unavailable genre');
+        return;
+    }
+    res.send(genre);
+});
 const port = process.env.PORT || 8080;
 app.listen(port,()=>{
     console.log(`listening to port ${port}`);
