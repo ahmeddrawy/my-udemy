@@ -2,8 +2,9 @@ const express = require('express');
 const app = express();
 const Joi = require('joi'); //return class
 const logger = require('./logger');
-app.use(logger);
+const helmet = require('helmet');
 
+app.use(helmet);
 app.use(express.json());
 let courses=[
     {id:1 , name:"c1"},
