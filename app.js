@@ -1,9 +1,12 @@
 const express = require('express');
 const app = express();
 const Joi = require('joi'); //return class
-const logger = require('./logger');
 const helmet = require('helmet');
+// const config = require('config');
 
+/// config
+// console.log(`app name ${config.get('DEBUG')}`);
+console.log(`app name ${process.env.PORT}`);
 app.use(helmet);
 app.use(express.json());
 let courses=[
