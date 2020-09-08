@@ -22,9 +22,18 @@ const schema = new mongoose.Schema({
 const Course = mongoose.model('course',schema);
 async function add(course){
     try {
-        const result = await (new Course(course)).save()
-    } catch (error) {
-        console.log('saving error' ,error.message);
+        const result = await (new Course(course)).save();
+        return result;
+    }  catch(exception){
+        let err = []
+        for (const key in exception.errors) {
+            if (exception.errors.hasOwnProperty(key)) {
+                const message = exception.errors[key].message;
+                err.push(message);
+                // console.log(properties);
+            }
+        }
+        return err;
     }
 };
 async function findAll(){
