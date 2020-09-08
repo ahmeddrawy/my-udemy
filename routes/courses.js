@@ -1,6 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const Joi = require('joi');
+//============= db =============
+const mongoose = require('mongoose');
+const coursesdb = require('../db/courses.js');
+const URI = 'mongodb://localhost:27017/MyUdemy';
+mongoose.connect(URI)
+.then(()=>console.log('connected to mongodb'))
+.catch((err)=>console.log(`can't connect` , err.message));
 let courses=[
     {id:1 , name:"c1"},
     {id :2 , name:"c2"}
@@ -8,21 +15,26 @@ let courses=[
 
 ///get all courses
 router.get('/',(req , res)=>{
-    res.send(courses);
+    coursesdb.findAll().then((result)=>res.send(result));
+    // res.send(courses);
 });
 ///add course to courses
 router.post('/' , (req,res)=>{
     const {error, value} = validateCourse(req.body); ///return object has error and result
     ///if error is null then validated and will proceed
     if(!error){
-        console.log(value);
         const course = {
-            id: courses.length +1,
             name: req.body.name ,
-            
+            tags: req.body.tags
         };
-        courses.push(course);
-        res.send(course);
+        coursesdb.add(course).
+        then(
+            (result)=>res.send(result)
+        ).catch(
+            (err)=>{
+                res.status(400).send(err.message);
+            }
+        )
     }
     else{
         ///else in we have error object and details array 
@@ -88,7 +100,8 @@ router.delete('/:id',(req , res)=>{
 //utilites
 function validateCourse(course){
     const schema = Joi.object({
-        name : Joi.string().min(3).required()
+        name : Joi.string().min(3).required(),
+        tags:Joi.array()
     });
     return schema.validate(course);
 }
