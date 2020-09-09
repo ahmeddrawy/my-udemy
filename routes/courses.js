@@ -30,17 +30,16 @@ router.post('/' , async(req,res)=>{
 });
 /// api/courses/1
 ///ge course by id
-router.get('/:id',(req,res)=>{
-    console.log(req.params.id);
-    const ret = courses.find((course)=> course.id == req.params.id);
-    if(!ret){
+router.get('/:id',async(req,res)=>{
+    const id =req.params.id;
+    const course =await Course.findById(id);
+    if(!course){
         res.status(404).send(`the course with the given id can't be found `);
         
     }
     else {
-        res.send(ret);
+        res.send(course);
     }
-    // console.log(ret);
 });
 /// to update course
 router.put('/:id',async(req,res)=>{
@@ -66,16 +65,17 @@ router.put('/:id',async(req,res)=>{
     return ;
 });
 /// to delete course by id
-router.delete('/:id',(req , res)=>{
-    const course = courses.find((course)=> course.id == req.params.id);
-    if(!course){
-        res.status(404).send("course not found");
-        return ;
+router.delete('/:id',async(req , res)=>{
+    const id =req.params.id;
+    try {
+        const course =await Course.findByIdAndRemove(id);
+        if(!course){
+            res.status(404).send("course not found");
+            return ;
+        }
+        res.send(course);
+    } catch (error) {
+        console.log('error : ',error.message); // todo 
     }
-    const indx = courses.indexOf(course);
-    courses.splice(indx,1);
-    res.send(course);
-    return;
-
 });
 module.exports = router ;
