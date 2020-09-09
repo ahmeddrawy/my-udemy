@@ -1,10 +1,17 @@
 const express = require('express');
 const app = express();
 const Joi = require('joi'); //return class
+const mongoose = require('mongoose');
 
 const courses = require('./routes/courses');
 const genres = require('./routes/genres');
 
+//======== db setup ================
+const URI = 'mongodb://localhost:27017/MyUdemy';
+mongoose.connect(URI)
+.then(()=>console.log('connected to mongodb'))
+.catch((err)=>console.log(`can't connect` , err.message));
+//====================
 // const config = require('config');
 
 /// ============= config ============
