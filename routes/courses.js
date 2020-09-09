@@ -1,40 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const Joi = require('joi');
-//============= db =============
-const mongoose = require('mongoose');
-const coursesdb = require('../db/courses.js');
-const URI = 'mongodb://localhost:27017/MyUdemy';
-mongoose.connect(URI)
-.then(()=>console.log('connected to mongodb'))
-.catch((err)=>console.log(`can't connect` , err.message));
-let courses=[
-    {id:1 , name:"c1"},
-    {id :2 , name:"c2"}
-];
+const {Course,validate} = require('../models/course');
 
 ///get all courses
-router.get('/',(req , res)=>{
-    coursesdb.findAll().then((result)=>res.send(result));
-    // res.send(courses);
+router.get('/',async (req , res)=>{
+    const courses =await Course.find();
+    res.send(courses)
 });
 ///add course to courses
-router.post('/' , (req,res)=>{
-    const {error, value} = validateCourse(req.body); ///return object has error and result
+router.post('/' , async(req,res)=>{
+    const {error, value} = validate(req.body); ///return object has error and result
     ///if error is null then validated and will proceed
     if(!error){
-        const course = {
+        let course = new Course({
             name: req.body.name ,
             tags: req.body.tags
-        };
-        coursesdb.add(course).
-        then(
-            (result)=>res.send(result)
-        ).catch(
-            (err)=>{
-                res.status(400).send(err.message);
-            }
-        )
+        });
+        course = await course.save();
+        res.send(course);
     }
     else{
         ///else in we have error object and details array 
@@ -60,27 +43,25 @@ router.get('/:id',(req,res)=>{
     // console.log(ret);
 });
 /// to update course
-router.put('/:id',(req,res)=>{
-    // look up the course if not found return 404  not found
-    const id = req.params.id;
-    const course = courses.find((course)=> course.id == req.params.id);
-    if(!course){
-        res.status(404).send("not found");
-        return ;
-    }
-
-    //validate 
-    //if invalid return 400 - bad request
-    const {error, value} =validateCourse(req.body); ///return object has error and result
-
+router.put('/:id',async(req,res)=>{
+    //validate if invalid return 400 - bad request
+    const {error, value} =validate(req.body); ///return object has error and result
     if(error){
         const error_array = error.details.map((e)=>e.message)
         console.log(error_array);
         res.status(400).send(error_array);
         return ;
     }
+    const id = req.params.id;
+    const course = await Course.findByIdAndUpdate(id,{name:req.body.name},{
+        new:true        /// to get the updated from database
+    });
+    // look up the course if not found return 404  not found
+    if(!course){
+        res.status(404).send("not found");
+        return ;
+    }
     // update and return the updated course
-    course.name = req.body.name;
     res.send(course);
     return ;
 });
@@ -88,7 +69,7 @@ router.put('/:id',(req,res)=>{
 router.delete('/:id',(req , res)=>{
     const course = courses.find((course)=> course.id == req.params.id);
     if(!course){
-        res.status(404).send("not found");
+        res.status(404).send("course not found");
         return ;
     }
     const indx = courses.indexOf(course);
@@ -97,12 +78,4 @@ router.delete('/:id',(req , res)=>{
     return;
 
 });
-//utilites
-function validateCourse(course){
-    const schema = Joi.object({
-        name : Joi.string().min(3).required(),
-        tags:Joi.array()
-    });
-    return schema.validate(course);
-}
 module.exports = router ;
