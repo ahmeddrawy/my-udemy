@@ -19,11 +19,15 @@ const schema= new mongoose.Schema({
         unique:true
     }
 })
-const Customer = mongoose.model('customer' ,schema);
+const User = mongoose.model('user' ,schema);
 function validateUser(user){
     const schema = Joi.object({
         name:Joi.string().min(3).required(),
         password:Joi.string().min(8).regex(passwordRegex),
         email:Joi.string().regex(emailRegex)
     })
+}
+module.exports= {
+    User :User ,
+    validate : validateUser
 }
