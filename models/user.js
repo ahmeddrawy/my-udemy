@@ -21,11 +21,13 @@ const schema= new mongoose.Schema({
 })
 const User = mongoose.model('user' ,schema);
 function validateUser(user){
+    console.log('validating  in joi ', user);
     const schema = Joi.object({
         name:Joi.string().min(3).required(),
         password:Joi.string().min(8).regex(passwordRegex),
         email:Joi.string().regex(emailRegex)
-    })
+    });
+    return schema.validate(user);
 }
 module.exports= {
     User :User ,
