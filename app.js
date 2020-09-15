@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const courses = require('./routes/courses');
 const genres = require('./routes/genres');
 const users = require('./routes/users');
+const logins = require('./routes/logins');
 
 //======== db setup ================
 const URI = 'mongodb://localhost:27017/MyUdemy';
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use('/api/courses',courses);
 app.use('/api/genres',genres);
 app.use('/api/users',users);
+app.use('/api/logins',logins);
 
 
 app.get('/',(req ,res)=>{
