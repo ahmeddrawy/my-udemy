@@ -3,6 +3,8 @@ const router = express.Router();
 const {User , validate} = require('../models/user');
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const config = require('config');
 /// to reqister a user 
 router.post('/',async (req,res)=>{
     const {error } = validate(req.body);
@@ -16,10 +18,11 @@ router.post('/',async (req,res)=>{
         user.password = await bcrypt.hash(user.password,salt);
         user = await user.save();
         user=  _.pick(user,['name','email']);
-        res.send(user);
+        const token = jwt.sign({_id:user._id},config.get('jwt_private'));
+        res.header('x-auth-token',token).send(user);
     }
     catch(err){
-        res.send(err.message);
+        res.send('error in registering '+err.message);
     }
 
 });
