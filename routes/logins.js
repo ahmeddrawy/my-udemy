@@ -4,9 +4,15 @@ const router = express.Router();
 const {User} = require('../models/user');
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const config = require('config');
 const emailRegex = /^[\w]+[\w\.]+@([\w-])+(\.)+[\w-]{2,4}$/;
 const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
 /// to reqister a user 
+if(!config.get('jwt_private')){
+    console.error('Fatal error: jwt_private is not defined !!');
+    process.exit(1);
+}
 router.post('/',async (req,res)=>{
     const {error } = validate(req.body);
     if(error){
@@ -25,8 +31,8 @@ router.post('/',async (req,res)=>{
         if(!validPassword){
             return res.status(400).send('invalid email or password');
         }
-
-        res.send(true);
+        const token = jwt.sign({_id:user._id},config.get('jwt_private'));
+        res.send(token);
     }
     catch(err){
         res.send(err.message);
