@@ -12,19 +12,7 @@ const schema= new mongoose.Schema({
     },
     password : {
         type:String,
-        match:passwordRegex,
-        set:async function(v){
-            const salt =await bcrypt.genSalt(10);
-            console.log(v);
-            try {
-                const hashed =  await bcrypt.hash(v,salt);
-                console.log(hashed);
-                return hashed;
-                
-            } catch (error) {
-                console.log('error in setting password',error.message);
-            }
-        }
+        match:passwordRegex
     },
     email:{
         type:String,
