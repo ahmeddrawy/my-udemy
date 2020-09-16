@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
 const bcrypt = require('bcrypt');
+const config = require('config');
+const jwt = require('jsonwebtoken');
 const emailRegex = /^[\w]+[\w\.]+@([\w-])+(\.)+[\w-]{2,4}$/;
 const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
 const schema= new mongoose.Schema({
@@ -20,6 +22,11 @@ const schema= new mongoose.Schema({
         unique:true
     }
 })
+schema.methods.generateAuthToken = function(){
+    const token = jwt.sign({_id:this._id},config.get('jwt_private'));
+    return token ;
+
+}
 const User = mongoose.model('user' ,schema);
 function validateUser(user){
     const schema = Joi.object({
