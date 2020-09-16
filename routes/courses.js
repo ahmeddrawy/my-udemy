@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const auth = require('../middleware/auth');
 const {Course,validate} = require('../models/course');
 
 ///get all courses
@@ -8,7 +9,7 @@ router.get('/',async (req , res)=>{
     res.send(courses)
 });
 ///add course to courses
-router.post('/' , async(req,res)=>{
+router.post('/' ,auth, async(req,res)=>{
     const {error, value} = validate(req.body); ///return object has error and result
     ///if error is null then validated and will proceed
     if(!error){
