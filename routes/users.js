@@ -5,6 +5,13 @@ const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('config');
+const auth = require('../middleware/auth')
+// get current user 
+router.get('/me',auth, async(req,res)=>{
+    const id  = req.user._id;
+    const user = await User.findById(id).select('-password').select('-__v'); /// excluding password
+    res.send(user);
+})
 /// to reqister a user 
 router.post('/',async (req,res)=>{
     const {error } = validate(req.body);
