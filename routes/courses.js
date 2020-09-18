@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
 const {Course,validate} = require('../models/course');
 
 ///get all courses
@@ -66,7 +67,7 @@ router.put('/:id',async(req,res)=>{
     return ;
 });
 /// to delete course by id
-router.delete('/:id',async(req , res)=>{
+router.delete('/:id',[auth,admin],async(req , res)=>{
     const id =req.params.id;
     try {
         const course =await Course.findByIdAndRemove(id);
