@@ -5,9 +5,14 @@ const admin = require('../middleware/admin');
 const {Course,validate} = require('../models/course');
 
 ///get all courses
-router.get('/',async (req , res)=>{
-    const courses =await Course.find();
-    res.send(courses)
+router.get('/',async (req , res,next)=>{
+    try{   
+        const courses =await Course.find();
+        res.send(courses)
+    }
+    catch(err){
+        next(err); /// the error middleware
+    }
 });
 ///add course to courses
 router.post('/' ,auth, async(req,res)=>{
