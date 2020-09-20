@@ -3,12 +3,11 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const admin = require('../middleware/admin');
 const {Course,validate} = require('../models/course');
-const asyncMiddleware = require('../middleware/async')
 ///get all courses
-router.get('/',asyncMiddleware( async (req , res)=>{
+router.get('/',async (req , res)=>{
         const courses =await Course.find();
         res.send(courses)
-}));
+});
 ///add course to courses
 router.post('/' ,auth, async(req,res)=>{
     const {error, value} = validate(req.body); ///return object has error and result
