@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const Joi = require('joi'); //return class
 const mongoose = require('mongoose');
-
+const config = require('config');
 /// routes
 const courses = require('./routes/courses');
 const genres = require('./routes/genres');
@@ -12,6 +12,11 @@ const logins = require('./routes/logins');
 ///middlewares
 const err_middleware = require('./middleware/error');
 
+// config
+if(!config.get('jwt_private')){
+    console.error('Fatal error: jwt_private is not defined !!');
+    process.exit(1);
+}
 //======== db setup ================
 const URI = 'mongodb://localhost:27017/MyUdemy';
 mongoose.connect(URI)
