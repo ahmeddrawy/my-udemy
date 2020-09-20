@@ -3,6 +3,7 @@ const app = express();
 const Joi = require('joi'); //return class
 const mongoose = require('mongoose');
 const config = require('config');
+require('express-async-errors');
 /// routes
 const courses = require('./routes/courses');
 const genres = require('./routes/genres');
