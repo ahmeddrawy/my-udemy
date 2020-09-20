@@ -1,7 +1,7 @@
-module.exports =  async function (handler){
-    return (req,res , next)=>{
+module.exports = function (handler){
+    return async(req,res , next)=>{
         try{
-            await handler();
+            await handler(req,res);
         }
         catch(err){
             next(err);
