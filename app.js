@@ -15,7 +15,6 @@ const db_URI = 'mongodb://localhost:27017/MyUdemy';
 winston.add(new winston.transports.File({filename:'logfile.log'}));
 /// to log errors in mongodb 
 winston.add(new winston.transports.MongoDB({db:db_URI}));
-throw new Error("smth failed during startup")
 /// routes
 const courses = require('./routes/courses');
 const genres = require('./routes/genres');
