@@ -4,6 +4,9 @@ const Joi = require('joi'); //return class
 const mongoose = require('mongoose');
 const config = require('config');
 require('express-async-errors');
+const winston = require('winston');
+
+winston.add(new winston.transports.File({filename:'logfile.log'}));
 /// routes
 const courses = require('./routes/courses');
 const genres = require('./routes/genres');
