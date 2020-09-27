@@ -5,8 +5,12 @@ const mongoose = require('mongoose');
 const config = require('config');
 require('express-async-errors');
 const winston = require('winston');
-
+require('winston-mongodb');
+const db_URI = 'mongodb://localhost:27017/MyUdemy';
+/// to log errors in files
 winston.add(new winston.transports.File({filename:'logfile.log'}));
+/// to log errors in mongodb 
+winston.add(new winston.transports.MongoDB({db:db_URI}));
 /// routes
 const courses = require('./routes/courses');
 const genres = require('./routes/genres');
@@ -22,8 +26,7 @@ if(!config.get('jwt_private')){
     process.exit(1);
 }
 //======== db setup ================
-const URI = 'mongodb://localhost:27017/MyUdemy';
-mongoose.connect(URI)
+mongoose.connect(db_URI)
 .then(()=>console.log('connected to mongodb'))
 .catch((err)=>console.log(`can't connect` , err.message));
 
