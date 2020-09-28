@@ -10,6 +10,10 @@ process.on('uncaughtException',(exc)=>{
     winston.error(exc.message , exc);
     console.log('we faced an internal error');
 });
+process.on('unhandledRejection' ,(exc)=>{
+    winston.error(exc.message , exc);
+    console.log('we have an unhandled rejection');
+});
 const db_URI = 'mongodb://localhost:27017/MyUdemy';
 /// to log errors in files
 winston.add(new winston.transports.File({filename:'logfile.log'}));
