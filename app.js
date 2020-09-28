@@ -7,18 +7,24 @@ require('express-async-errors');
 const winston = require('winston');
 require('winston-mongodb');
 process.on('uncaughtException',(exc)=>{
-    winston.error(exc.message , exc);
+    winston.error(exc.message,exc);
     console.log('we faced an internal error');
-});
-process.on('unhandledRejection' ,(exc)=>{
-    winston.error(exc.message , exc);
-    console.log('we have an unhandled rejection');
+    // process.exit(1);
 });
 const db_URI = 'mongodb://localhost:27017/MyUdemy';
 /// to log errors in files
 winston.add(new winston.transports.File({filename:'logfile.log'}));
 /// to log errors in mongodb 
 winston.add(new winston.transports.MongoDB({db:db_URI}));
+
+process.on('unhandledRejection' ,(exc)=>{
+    winston.error(exc.message,exc);
+    /// todo we should terminate here but process.exit doesn't wait for the logging process
+    /// we must wait for the streams to flush 
+});
+// throw new Error('un caught exception');
+const p = Promise.reject(new Error('unfullfilled promise'));
+p.then(()=>console.log('done'));
 /// routes
 const courses = require('./routes/courses');
 const genres = require('./routes/genres');
