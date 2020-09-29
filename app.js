@@ -1,12 +1,12 @@
 const express = require('express');
 const app = express();
 const Joi = require('joi'); //return class
-const mongoose = require('mongoose');
 const config = require('config');
 require('express-async-errors');
 const winston = require('winston');
 require('winston-mongodb');
 require('./startup/routes')(app);
+require('./startup/db')();
 process.on('uncaughtException',(exc)=>{
     winston.error(exc.message,exc);
     console.log('we faced an internal error');
@@ -23,19 +23,11 @@ process.on('unhandledRejection' ,(exc)=>{
     /// todo we should terminate here but process.exit doesn't wait for the logging process
     /// we must wait for the streams to flush 
 });
-///middlewares
-
-
 // config
 if(!config.get('jwt_private')){
     console.error('Fatal error: jwt_private is not defined !!');
     process.exit(1);
 }
-//======== db setup ================
-mongoose.connect(db_URI)
-.then(()=>console.log('connected to mongodb'))
-.catch((err)=>console.log(`can't connect` , err.message));
-
 
 const port = process.env.PORT || 8080;
 app.listen(port,()=>{
