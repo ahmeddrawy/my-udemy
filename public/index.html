@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/index.css">
+    <title>Document</title>
+</head>
+<body>
+    <!-- <h1>welcome to my app</h1> -->
+    <div class="container">
+        <form action="/api/logins" method="POST">
+          <div class="row">
+            <div class="col">
+              <div class="hide-md-lg">
+                <p>Or sign in manually:</p>
+              </div>
+      
+              <input type="text" name="username" placeholder="Username" required>
+              <input type="password" name="password" placeholder="Password" required>
+              <input type="submit" value="Login">
+            </div>
+      
+          </div>
+        </form>
+      </div>
+      
+      <div class="bottom-container">
+        <div class="row">
+          <div class="col">
+            <a href="#" style="color:white" class="btn">Sign up</a>
+          </div>
+          <div class="col">
+            <a href="#" style="color:white" class="btn">Forgot password?</a>
+          </div>
+        </div>
+      </div>
+</body>
+</html>
