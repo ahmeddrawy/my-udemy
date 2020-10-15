@@ -23,7 +23,7 @@ router.post('/',async (req,res)=>{
             return res.status(400).send('invalid email or password');
         }
         const validPassword = await bcrypt.compare(req.body.password , user.password);
-        console.log(validPassword);
+        /// todo log to winston
         if(!validPassword){
             return res.status(400).send('invalid email or password');
         }
