@@ -5,7 +5,7 @@ require('./startup/logging')(); /// logging is here to handle errors from routes
 require('./startup/routes')(app);
 require('./startup/db')();
 require('./startup/config')();
-
+app.use(express.static('public'))
 const port = process.env.PORT || 8080;
 app.listen(port,()=>{
     winston.info(`listening to port ${port}`);
