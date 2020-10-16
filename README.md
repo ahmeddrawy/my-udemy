@@ -2,16 +2,20 @@
 A simple project to practise **Node js**, **express**, **mongodb** and **npm packages**
 ### First release
 
-- Rest Api including endpoints to 
+1. Rest Api including endpoints to 
 
-> Register user
-> Login user
-> Register Courses
-> delete Courses
-> edit Courses
-> authenticate user to login 
-> authorize users to do specific actions for example : Admins only can delete courses 
 
+-  Register user
+-  Login user
+-  Register Courses
+-  delete Courses
+-  edit Courses
+-  authenticate user to login 
+-  authorize users to do specific actions for example : Admins only can delete courses 
+
+2.  persistent data on mongo db using [mongoose ODM](https://mongoosejs.com/)
+
+3. Logging to mongo db and files using [Winston](https://www.npmjs.com/package/winston)
 Todos
 
 - [ ] add forgot password
