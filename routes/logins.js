@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const emailRegex = /^[\w]+[\w\.]+@([\w-])+(\.)+[\w-]{2,4}$/;
 const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-/// to reqister a user 
+/// to login a user 
 
 router.post('/',async (req,res)=>{
     const {error } = validate(req.body);
