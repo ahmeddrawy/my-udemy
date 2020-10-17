@@ -34,7 +34,6 @@ schema.pre('save',async function(next){
     const salt =await bcrypt.genSalt();
     this.password= await bcrypt.hash(this.password,salt);
     next();
-
 })
 schema.methods.correctPassword =async function(candidatePassword,password){
     return await bcrypt.compare(candidatePassword,password)
