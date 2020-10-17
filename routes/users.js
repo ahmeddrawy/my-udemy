@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {User , validate} = require('../models/user');
 const _ = require('lodash');
+const crypto=require('crypto');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('config');
