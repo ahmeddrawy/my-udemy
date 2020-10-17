@@ -9,6 +9,15 @@ To contribue check [CONTRIBUTING.md](https://github.com/ahmeddrawy/my-udemy/blob
 ```
   npm install 
 ```
+### npm packages used and workflow 
+
+* I used winston to log the errors and information, If you want to `console.log` errors you can use `winston.log` or `winston.error` 
+
+* I use `bcrypt` to encrypt passwords before saving to database and decrypting after fetching from database
+
+* I use `Joi` package to validate input 
+
+* I use `Config` package to configure environment variables and configuration 
 
 ### First release
 

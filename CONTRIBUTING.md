@@ -15,6 +15,14 @@ Contribute to this project, whether it's:
 
 * If you think an algorithm is missing, create an issue.
 
+* I used winston to log the errors and information, If you want to `console.log` errors you can use `winston.log` or `winston.error` 
+
+* I use `bcrypt` to encrypt passwords before saving to database and decrypting after fetching from database
+
+* I use `Joi` package to validate input 
+
+* I use `Config` package to configure environment variables and configuration 
+
 ### Making a PR
 
 > - Make sure you have been assigned the issue to which you are making a PR.
