@@ -1,5 +1,15 @@
 # My-udemy
 A simple project to practise **Node js**, **express**, **mongodb** and **npm packages**
+To contribue check [CONTRIBUTING.md](https://github.com/ahmeddrawy/my-udemy/blob/master/CONTRIBUTING.md)
+ * To clone 
+```
+  git clone https://github.com/ahmeddrawy/my-udemy.git
+```
+* install  npm packages 
+```
+  npm install 
+```
+
 ### First release
 
 1. Rest Api including endpoints to 
