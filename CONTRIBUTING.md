@@ -29,6 +29,10 @@ Contribute to this project, whether it's:
     ```
     git pull upstream master https://github.com/ahmeddrawy/my-udemy
     ```
+* install npm dependencies 
+    ```
+    npm install 
+    ````
 * Create your feature branch
     ```
     git checkout -b <feature-name>
