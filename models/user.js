@@ -39,6 +39,10 @@ schema.methods.correctPassword =async function(candidatePassword,password){
     return await bcrypt.compare(candidatePassword,password)
 }
 
+// This methode is used for ResetPassword Router
+// resetToken :- generated a random token from crypto lib
+// Encrypted that token and save that token in to mongoDb
+// The random genarated String Send to the client.
 schema.methods.createPasswordResetToken=function(){
     const resetToken=crypto.randomBytes(32).toString('hex');
     this.passwordResetToken=crypto.createHash('sha256').update(resetToken).digest('hex');

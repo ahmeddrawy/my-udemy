@@ -3,9 +3,6 @@ const router = express.Router();
 const {User , validate} = require('../models/user');
 const _ = require('lodash');
 const crypto=require('crypto');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const config = require('config');
 const auth = require('../middleware/auth');
 const { route } = require('./logins');
 // get current user 
@@ -54,11 +51,17 @@ router.post('/forgetPassword',async (req,res)=>{
     }catch(err){
         user.passwordResetToken=undefined;
         await user.save({validateBeforeSave:false})
-        next(new AppError('failed to send the Email',500));
+        res.status(400).json({
+            status:'error',
+            message:'sorry we have an internal error'
+        })
     }
 })
 
 router.patch('/resetPassword/:resetToken',async (req,res)=>{
+    // At the sime of saving the token we first encrypted the token so what we are doing is
+    // encrypted the token again that we have received from the client and compare it with 
+    // whats has been save in mongodb.
     const encryptPasswordResetToken=crypto.createHash('sha256').update(req.params.resetToken).digest('hex');
     const user=await User.findOne({passwordResetToken:encryptPasswordResetToken})
     if(!user){
@@ -66,14 +69,14 @@ router.patch('/resetPassword/:resetToken',async (req,res)=>{
             status:'error',
             message:'Link is Not Valid',
         })
-        return ;
+        return;
     }
     user.password=req.body.password;
     user.passwordResetToken=undefined;
     await user.save();
     res.status(200).json({
         status:'success',
-        message:'Password changed sucessfull'
+        message:'Password changed sucessfully'
     })
 })
 module.exports = router ;
