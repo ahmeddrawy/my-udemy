@@ -22,7 +22,7 @@ router.post('/',async (req,res)=>{
             /// to avoid attacks like bruteforcing
             return res.status(400).send('invalid email or password');
         }
-        const validPassword = await bcrypt.compare(req.body.password , user.password);
+        const validPassword = await User.correctPassword(req.body.password,user.password)
         /// todo log to winston
         if(!validPassword){
             return res.status(400).send('invalid email or password');

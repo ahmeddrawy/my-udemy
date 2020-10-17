@@ -6,7 +6,7 @@ require('./startup/routes')(app);
 require('./startup/db')();
 require('./startup/config')();
 app.use(express.static('public'))
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8090;
 app.listen(port,()=>{
     winston.info(`listening to port ${port}`);
 });
