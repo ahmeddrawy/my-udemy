@@ -19,9 +19,11 @@ To contribue check [CONTRIBUTING.md](https://github.com/ahmeddrawy/my-udemy/blob
 
 * I use `Config` package to configure environment variables and configuration 
 
+### Documentation 
+- [**Postman Documentation**](https://documenter.getpostman.com/view/10819813/TVRefBVx)
 ### First release
 
-1. Rest Api including endpoints to 
+1. Rest Api with a  including endpoints to 
 
 
 -  Register user
