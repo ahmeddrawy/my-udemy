@@ -7,17 +7,17 @@ const hbs = require('express-handlebars')
 
 ///============= routes =============
 
+app.use(express.urlencoded({ extended: true }))
 app.engine(
   'hbs',
   hbs({
-    defaultLayout: 'main',
     extname: 'hbs',
+    defaultLayout: 'main',
   })
 )
 app.set('view engine', 'hbs')
-app.use(express.static(path.join(__dirname, './public')))
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.set('views', path.join(__dirname, 'views'))
+app.use(express.static('public'))
 // app.use(express.json());
 app.use('/home', home)
 app.use('/login', login)
