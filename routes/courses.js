@@ -2,11 +2,17 @@ const express = require('express')
 const router = express.Router()
 const auth = require('../middleware/auth')
 const admin = require('../middleware/admin')
-const { validate } = require('../models/course')
+const Course = require('../models/course')
 const courseController = require('../controllers/course.controller')
 
 ///get all courses
-router.get('/', courseController.showCourses)
+router.get('/', (req, res, next) => {
+  Course.find({})
+    .lean()
+    .exec(function (err, course) {
+      res.render('home', { courses: course })
+    })
+})
 ///add course to courses
 router.get('/seed', courseController.seedCourses)
 

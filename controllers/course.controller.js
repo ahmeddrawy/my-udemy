@@ -6,7 +6,8 @@ module.exports = { showCourses: showCourses, seedCourses: seedCourses }
 
 //render all courses
 function showCourses(req, res) {
-  Course.find({})
+  Course.find()
+    .exec()
     .then((courses) => {
       res.render('home', { courses: courses })
     })

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
+var Schema = mongoose.Schema
 const Joi = require('joi')
-const schema = new mongoose.Schema({
+const schema = new Schema({
   name: {
     type: String,
     require: true,
@@ -19,7 +20,10 @@ const schema = new mongoose.Schema({
     },
   },
 })
-module.exports = mongoose.model('Course', schema)
+
+const Course = mongoose.model('Course', schema)
+
+module.exports = Course
 function validateCourse(course) {
   const schema = Joi.object({
     name: Joi.string().min(3).required(),
@@ -27,3 +31,5 @@ function validateCourse(course) {
   })
   return schema.validate(course)
 }
+
+exports.validate = validateCourse
