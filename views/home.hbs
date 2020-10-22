@@ -4,15 +4,7 @@
     <p class="lead">A clone site of Udemy</p>
   </div>
 </div>
+
 <div class="card-deck">
-  {{#each courses}}
-  <div class="card border-dark mb-3" style="max-width: 18rem;">
-  <div class="card-header bg-transparent border-dark">Course:</div>
-  <div class="card-body text-dark">
-    <h5 class="card-title">{{this.name}}</h5>
-    <p class="card-text">{{this.tags}}</p>
-  </div>
-  <div class="card-footer bg-transparent border-dark"></div>
-</div>
-    {{/each}}
+{{>cards}}
   </div>

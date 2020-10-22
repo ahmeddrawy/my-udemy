@@ -7,13 +7,14 @@ const courseController = require('../controllers/course.controller')
 
 ///get all courses
 router.get('/', (req, res, next) => {
+  //get courses from database and return as plain js objects
   Course.find({})
     .lean()
     .exec(function (err, course) {
       res.render('home', { courses: course })
     })
 })
-///add course to courses
+///seed the database with courses to render on the screen
 router.get('/seed', courseController.seedCourses)
 
 router.post('/', auth, async (req, res) => {

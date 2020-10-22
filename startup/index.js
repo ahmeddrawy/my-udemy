@@ -8,6 +8,7 @@ const hbs = require('express-handlebars')
 ///============= routes =============
 
 app.use(express.urlencoded({ extended: true }))
+//set up express handlebars
 app.engine(
   'hbs',
   hbs({
@@ -18,7 +19,7 @@ app.engine(
 app.set('view engine', 'hbs')
 app.use(express.static('public'))
 // app.use(express.json());
-app.use('/home', home)
+app.use('/', home)
 app.use('/login', login)
 app.use('/api/courses', courses)
 app.use('/api/genres', genres)
