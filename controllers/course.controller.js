@@ -1,20 +1,7 @@
 const config = require('config')
-const { x } = require('joi')
 const Course = require('../models/course')
 
 module.exports = { showCourses: showCourses, seedCourses: seedCourses }
-
-//render all courses
-function showCourses(req, res) {
-  Course.find()
-    .exec()
-    .then((courses) => {
-      res.render('home', { courses: courses })
-    })
-    .catch((err) => {
-      res.status(500).send(err.message)
-    })
-}
 
 function seedCourses(req, res) {
   const seedCourses = [
