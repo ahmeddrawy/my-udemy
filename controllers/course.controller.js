@@ -1,7 +1,7 @@
 const config = require('config')
 const Course = require('../models/course')
 
-module.exports = { showCourses: showCourses, seedCourses: seedCourses }
+module.exports = { seedCourses: seedCourses }
 
 function seedCourses(req, res) {
   const seedCourses = [
