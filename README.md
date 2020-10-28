@@ -39,6 +39,8 @@ To contribue check [CONTRIBUTING.md](https://github.com/ahmeddrawy/my-udemy/blob
 3. Logging to mongo db and files using [Winston](https://www.npmjs.com/package/winston)
 Todos
 
+- [ ] add integeration testing
+
 - [ ] add forgot password
 
 - [ ] support sessions and CSRF tokens
