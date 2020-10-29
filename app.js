@@ -7,6 +7,7 @@ require('./startup/db')();
 require('./startup/config')();
 app.use(express.static('public'))
 const port = process.env.PORT || 8080;
-app.listen(port,()=>{
+const server  = app.listen(port,()=>{
     winston.info(`listening to port ${port}`);
-});
+}); /// used in testing 
+module.exports = server;
